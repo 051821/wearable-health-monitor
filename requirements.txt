@@ -1,0 +1,16 @@
+# Core scientific stack
+numpy
+pandas
+
+tensorflow
+keras
+
+# Machine learning utilities
+scikit-learn
+
+# Visualization
+matplotlib
+seaborn
+
+# Progress bar (optional but useful)
+tqdm
