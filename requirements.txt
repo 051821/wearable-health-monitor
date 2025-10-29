@@ -4,6 +4,7 @@ pandas
 
 tensorflow
 keras
+catboost
 
 # Machine learning utilities
 scikit-learn
