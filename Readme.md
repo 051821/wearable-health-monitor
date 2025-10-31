@@ -36,7 +36,7 @@ Copy code
 ## ⚙️ Setup Instructions
 
 ### 1️⃣ Clone this repository
-```bash
+
 git clone https://github.com/your-username/health-monitoring.git
 cd health-monitoring
 2️⃣ Create and activate a virtual environment
@@ -53,8 +53,7 @@ pip install -r requirements.txt
 🧠 Model Training
 Run the training script to retrain or fine-tune the model:
 
-bash
-Copy code
+
 python model.py
 This will:
 
@@ -69,8 +68,6 @@ Save the trained model as best_health_model.keras
 🌐 Run the Streamlit App
 After training, launch the interactive web app:
 
-bash
-Copy code
 streamlit run app.py
 You’ll see:
 
