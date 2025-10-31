@@ -15,3 +15,5 @@ seaborn
 
 # Progress bar (optional but useful)
 tqdm
+streamlit
+joblib
