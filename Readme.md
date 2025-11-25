@@ -28,10 +28,6 @@ Built with **TensorFlow**, **Streamlit**, and **Scikit-learn**, it combines mach
 ├── requirements.txt # All Python dependencies
 └── README.md # Project documentation
 
-yaml
-Copy code
-
----
 
 ## ⚙️ Setup Instructions
 
