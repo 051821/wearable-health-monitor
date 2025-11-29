@@ -1,100 +1,173 @@
-# 🏥 Health Monitoring - Health Score Prediction
+# Wearable Health Monitoring & Health Score Prediction System
 
-This project predicts a **Health Score** using wearable sensor data such as heart rate, sleep hours, step count, calories burned, and more.  
-Built with **TensorFlow**, **Streamlit**, and **Scikit-learn**, it combines machine learning and an interactive web dashboard for real-time insights.
+## A Production-Ready ML + DevOps + Automation Project
 
----
-
-## 🚀 Features
-
-- 📈 **Health Score Prediction** using a trained TensorFlow model  
-- 📊 **Interactive Streamlit Dashboard** for real-time input and visualization  
-- 🧠 **Preprocessing & Scaling** with saved Scikit-learn `StandardScaler`  
-- 💾 **Trained Model Saved** as `.keras` for reproducible predictions  
-- 📉 **Data Visualization** for sample distributions and model insights  
+This project builds an end-to-end machine learning pipeline that predicts an individual's daily health score using sensor data from wearable devices. It integrates TensorFlow, Streamlit, Docker, Jenkins, Terraform, Puppet, and Nagios to deliver a fully automated, monitored, and containerized ML system.
 
 ---
 
-## 🧩 Project Structure
+## Objective
 
-📦 Health Monitoring
-├── app.py # Streamlit UI for health score prediction
-├── model.py # Model training and evaluation script
-├── visualization.py # Data visualization and analysis
-├── best_health_model.keras # Saved trained model
-├── scaler.save # Saved StandardScaler for input normalization
-├── dataset/
-│ └── wearable_health_data.csv
-├── requirements.txt # All Python dependencies
-└── README.md # Project documentation
+The goal of this project is to design and deploy a real-world, production-style health prediction system that accomplishes the following:
 
-yaml
-Copy code
+- Uses deep learning to generate personalized health scores
+- Provides an interactive UI for real-time predictions
+- Runs inside a Docker container for easy deployment
+- Uses Jenkins for automated CI/CD
+- Uses Terraform to provision the environment
+- Uses Puppet to configure Windows agents
+- Uses Nagios to continuously monitor ML app uptime and CPU health
 
 ---
 
-## ⚙️ Setup Instructions
+## Project Workflow (End-to-End)
 
-### 1️⃣ Clone this repository
+### 1. Data Processing & Model Training
 
-git clone https://github.com/your-username/health-monitoring.git
-cd health-monitoring
-2️⃣ Create and activate a virtual environment
-bash
-Copy code
-python -m venv venv
-venv\Scripts\activate    # on Windows
-# or
-source venv/bin/activate # on Mac/Linux
-3️⃣ Install dependencies
-bash
-Copy code
-pip install -r requirements.txt
-🧠 Model Training
-Run the training script to retrain or fine-tune the model:
+Wearable health data is collected, including steps, sleep patterns, heart rate, stress levels, calories burned, and other relevant metrics. The data is then cleaned and scaled using Scikit-learn's StandardScaler. A deep learning regression model is trained using TensorFlow/Keras, and the best-performing model is saved in both Keras (.keras) and ONNX format for deployment.
 
+### 2. Model Deployment Using Docker
 
-python model.py
-This will:
+The Streamlit app, along with the model, scaler, and visualization scripts, are packaged inside a Docker image. The container exposes the Streamlit UI on port 8501, and the model runs efficiently in ONNX format for faster inference during production.
 
-Load the dataset
+### 3. CI/CD Pipeline with Jenkins
 
-Preprocess and scale features
+The Jenkins pipeline automates several critical tasks:
 
-Train a neural network
+- Pulling the latest code from GitHub
+- Training the TensorFlow model
+- Building the Docker image
+- Running Terraform to deploy the environment
+- Performing a basic health check of the deployed service
 
-Save the trained model as best_health_model.keras
+This ensures continuous testing, continuous deployment, and infrastructure automation throughout the development lifecycle.
 
-🌐 Run the Streamlit App
-After training, launch the interactive web app:
+### 4. Infrastructure Automation with Terraform
 
-streamlit run app.py
-You’ll see:
+Terraform handles infrastructure provisioning by:
 
-A sidebar to input health parameters
+- Uploading Puppet and Nagios configuration files to the Ubuntu VM
+- Managing Nagios monitoring configuration
+- Deploying the Docker container
+- Ensuring reproducible deployment through Infrastructure-as-Code principles
 
-A predicted health score on the main page
+### 5. Configuration Management with Puppet
 
-Expandable visualizations and dataset samples
+The Puppet module takes care of configuration management on the Windows agent by:
 
-📈 Example Metrics
-Metric	Score
-MAE	0.99
-RMSE	1.26
-R²	0.974
+- Creating monitoring directories on the Windows agent
+- Adding a PowerShell health check script
+- Scheduling automatic start of Docker Desktop
+- Ensuring the Windows node stays ready for monitoring
 
-(Lower MAE/RMSE and higher R² indicate strong performance.)
+### 6. Continuous Monitoring with Nagios
 
-📊 Visualization Preview
-Line chart of sample health scores
+Nagios provides continuous monitoring of the system by tracking:
 
-Feature correlations (optional in visualization.py)
+- Whether the ML app is running on port 8501
+- CPU load of the Windows agent
+- General availability of the host machine
 
-Future scope: trend graphs, feature importances, anomaly detection
+Alerts are triggered if the Streamlit app goes down, the host becomes unreachable, or CPU load crosses the defined threshold.
 
-💡 Future Enhancements
-Add more health parameters (e.g., blood oxygen, stress levels)
+---
 
-Integrate live IoT/wearable device data
+## Directory Structure
 
-Deploy on Streamlit Cloud or AWS
+```
+project-root/
+│
+├── app/               # Streamlit app, model files, dataset, ONNX model, scaler
+├── jenkins/           # Jenkins pipeline file
+├── terraform/         # Terraform modules for Puppet + Nagios + Docker
+├── puppet-files/      # Puppet manifest for Windows
+├── nagios/            # Nagios host/service configuration
+├── venv/              # Local virtual environment
+└── README.md          # Project documentation
+```
+
+---
+
+## Features
+
+### Machine Learning
+- Deep learning regression model for health score prediction
+- Comprehensive data normalization and preprocessing pipeline
+- Model achieves an R² score of 0.95
+
+### Deployment
+- Fully containerized using Docker for consistent environments
+- Fast ONNX inference for production-ready performance
+- Streamlit UI for real-time predictions and user interaction
+
+### DevOps Automation
+- CI/CD pipeline with Jenkins for automated builds and deployments
+- Infrastructure provisioning with Terraform
+- Configuration automation with Puppet
+- Monitoring and alerting via Nagios
+
+### Observability
+- Host health checks to ensure system availability
+- App port monitoring to verify service status
+- CPU load monitoring to track resource utilization
+
+---
+
+## How to Run the Project
+
+### 1. Clone the repository
+
+Download or clone the project to your local system.
+
+### 2. Install Python dependencies (optional if using Docker)
+
+Use the provided `requirements.txt` inside the `app/` folder to install necessary Python packages.
+
+### 3. Start the Streamlit app
+
+The app can run locally or inside Docker, depending on your preference and deployment needs.
+
+### 4. Run with Docker
+
+Build and run the container to launch the ML app on port 8501.
+
+### 5. Optional: Run Jenkins Pipeline
+
+Execute the Jenkinsfile stages to automate:
+- Model training
+- Docker build
+- Terraform deployment
+- Health check validation
+
+### 6. Deploy Infrastructure Using Terraform
+
+Initialize Terraform and apply the configuration to deploy:
+- Puppet module
+- Nagios configuration
+- Docker container
+
+### 7. Enable Monitoring
+
+Configure Nagios server to monitor:
+- ML app on port 8501
+- CPU load on the Windows agent
+- Windows host availability
+
+---
+
+## System Architecture (Summary)
+
+The system follows this workflow:
+
+1. Developer pushes code to GitHub
+2. Jenkins pipeline triggers, which trains the model and builds the Docker image
+3. Terraform applies infrastructure changes, provisions resources, and deploys the Docker container
+4. Puppet auto-configures the Windows node for monitoring
+5. Nagios monitors uptime, CPU load, and service health continuously
+6. Streamlit app serves predictions to end users through an intuitive interface
+
+---
+
+## Conclusion
+
+This project demonstrates a complete ML + MLOps + Automation pipeline, combining machine learning, containerization, infrastructure-as-code, configuration management, and continuous monitoring. It reflects how real-world production ML systems are built and maintained in modern organizations, providing a practical example of industry-standard practices for deploying and managing machine learning applications at scale.

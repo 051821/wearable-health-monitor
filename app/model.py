@@ -12,8 +12,8 @@ import joblib
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
 os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0"
 
-# Load dataset
-df = pd.read_csv(r"C:\Health monitoring\dataset\wearable_health_data.csv")
+# Load dataset (relative path inside app/)
+df = pd.read_csv("dataset/wearable_health_data.csv")
 print("\n📘 Dataset Info:\n")
 print(df.info())
 print("\n🔹 First 5 Rows:\n", df.head())
@@ -62,13 +62,14 @@ model.compile(optimizer=optimizer, loss='mse', metrics=['mae'])
 early_stop = callbacks.EarlyStopping(monitor='val_loss', patience=15, restore_best_weights=True)
 
 checkpoint = callbacks.ModelCheckpoint(
-    filepath="app/best_health_model.keras",
+    filepath="best_health_model.keras",   # save in same folder
     monitor='val_loss',
     save_best_only=True,
     verbose=1
 )
 
-reduce_lr = callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.5, patience=5, min_lr=1e-6, verbose=1)
+reduce_lr = callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.5, patience=5,
+                                        min_lr=1e-6, verbose=1)
 
 # Train
 history = model.fit(
@@ -101,7 +102,4 @@ plot_predictions(model, X_test, y_test)
 print("\n🚀 Model training and evaluation completed successfully!")
 
 # Save scaler
-joblib.dump(scaler, os.path.join("app", "scaler.save"))
-
-
-
+joblib.dump(scaler, "scaler.save")

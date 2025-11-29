@@ -1,6 +1,94 @@
-# Ignore Python virtual environment
+# -------------------------
+# Python & Virtual Environment
+# -------------------------
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pdb
+*.pkl
+*.h5
+*.sav
+
 venv/
-.env/
-ENV/
 env/
-__pychache__
+.venv/
+ENV/
+
+# -------------------------
+# TensorFlow / ML Artifacts
+# -------------------------
+*.keras
+*.onnx
+*.tflite
+*.ckpt
+*.checkpoint
+checkpoint/
+*.log
+logs/
+
+# -------------------------
+# Streamlit
+# -------------------------
+.streamlit/
+
+# -------------------------
+# Dataset (optional)
+# Uncomment if dataset should not be pushed
+# dataset/
+# *.csv
+
+# -------------------------
+# Docker
+# -------------------------
+*.dockerignore
+docker-build/
+docker-image/
+.docker/
+
+# -------------------------
+# Terraform
+# -------------------------
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+override.tf
+override.tf.json
+*.tfvars
+*.tfvars.json
+.terraform.lock.hcl
+
+
+# -------------------------
+# Jenkins
+# -------------------------
+workspace/
+builds/
+*.log
+*.tmp
+
+# -------------------------
+# OS / Editor / IDE Files
+# -------------------------
+.DS_Store
+Thumbs.db
+*.tmp
+*.swp
+*.swo
+
+# VSCode
+.vscode/
+
+# PyCharm
+.idea/
+
+# -------------------------
+# Config / Secrets (Make sure you don’t store creds)
+# -------------------------
+*.env
+.env.*
+credentials.json
+secret.key
+*.pem
+*.key

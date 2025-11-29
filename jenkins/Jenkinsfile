@@ -1,0 +1,43 @@
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/<your-repo>.git'
+            }
+        }
+
+        stage('Train Model') {
+            steps {
+                dir('app') {
+                    bat 'python model.py'
+                }
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                dir('app') {
+                    bat 'docker build -t mh_app_image .'
+                }
+            }
+        }
+
+        stage('Deploy Terraform') {
+            steps {
+                dir('terraform') {
+                    bat 'terraform init'
+                    bat 'terraform apply -auto-approve'
+                }
+            }
+        }
+
+        stage('Health Check') {
+            steps {
+                bat 'curl http://127.0.0.1:8501'
+            }
+        }
+    }
+}
